@@ -2,7 +2,6 @@ const express = require("express");
 const http = require("http");
 const ws = require("ws");
 const path = require("path");
-const { json } = require("body-parser");
 
 const app = express();
 app.use(express.static(path.join(__dirname, "./public")));

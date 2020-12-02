@@ -28,7 +28,7 @@
                 ws.onmessage = (event) => {
                     console.log(event.data);
                     const msg = JSON.parse(event.data);
-                    output.innerHTML = "x = " + msg.x + ", y = " + msg.y;
+                    output.innerHTML = `Answer from server: x = ${msg.x}, y = ${msg.y}`;
                 }
             };
     </script>
