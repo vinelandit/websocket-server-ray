@@ -10,10 +10,10 @@ app.get("/", (req, res) => { res.sendFile(path.join(__dirname, "index.html")) })
 const httpServer = http.createServer(app);
 const wss = new ws.Server({ server: httpServer });
 wss.on("connection",
-    (wss) =>
+    (ws) =>
     {
         console.log("Client connected");
-        wss.onmessage =
+        ws.onmessage =
             (event) =>
             {
                 const msg = JSON.parse(event.data);
@@ -23,7 +23,7 @@ wss.on("connection",
                     x: msg.x,
                     y: msg.y
                 }
-                wss.send(JSON.stringify(resp));
+                ws.send(JSON.stringify(resp));
             }
     });
 
