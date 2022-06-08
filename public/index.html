@@ -8,11 +8,15 @@
 </head>
 
 <body>
+    <audio id="bing" src="piano_C5.mp3">
+</audio>
     <h3>Click on the window.</h3>
     <div id="output" style="font-family: Arial; font-size: 14px;"></div>
 
     <script>
         const output = document.getElementById("output");
+        const bing = document.getElementById('bing');
+        var init = true;
         output.innerHTML = "Wait for connection...";
         // const ws = new WebSocket("ws://localhost:3000");
         const ws = new WebSocket("wss://websocket-server-ray.herokuapp.com");
@@ -20,6 +24,10 @@
             () => {
                 output.innerHTML = "Connected to the server";
                 window.onmousedown = (event) => {
+                    if(init) {
+                        bing.play();
+                        init = false;
+                    }
                     const x = event.clientX;
                     const y = event.clientY;
                     console.log(x + ", " + y)
@@ -28,6 +36,7 @@
 
                 ws.onmessage = (event) => {
                     console.log(event.data);
+                    bing.play();
                     const msg = JSON.parse(event.data);
                     output.innerHTML = `Answer from server: x = ${msg.x}, y = ${msg.y}`;
                 }
