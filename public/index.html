@@ -19,7 +19,7 @@
         ws.onopen =
             () => {
                 output.innerHTML = "Connected to the server";
-                window.onclick = (event) => {
+                window.onmousedown = (event) => {
                     const x = event.clientX;
                     const y = event.clientY;
                     console.log(x + ", " + y)
