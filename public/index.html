@@ -13,14 +13,14 @@
 </audio>
     <h3>Click on the window.</h3>
     <div id="output" style="font-family: Arial; font-size: 14px;"></div>
-
+    <script src="js/reconnecting-websocket.min.js"></script>
     <script>
         const output = document.getElementById("output");
         const bing = document.getElementById('bing');
         var init = true;
         output.innerHTML = "Wait for connection...";
         // const ws = new WebSocket("ws://localhost:3000");
-        const ws = new WebSocket("wss://websocket-server-ray.herokuapp.com");
+        const ws = new ReconnectingWebSocket("wss://websocket-server-ray.herokuapp.com");
         ws.onopen =
             () => {
                 output.innerHTML = "Connected to the server";
