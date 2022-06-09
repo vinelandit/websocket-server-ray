@@ -29,8 +29,8 @@
                 output.innerHTML = "Connected to the server";
                 window.onmousemove = (event) => {
                     if(drawing) {
-                        const x = event.clientX;
-                        const y = event.clientY;
+                        const x = event.clientX/window.innerWidth;
+                        const y = event.clientY/window.innerHeight;
                         console.log(x + ", " + y)
                         ws.send(JSON.stringify({x: x, y: y}));
                     }
