@@ -21,6 +21,7 @@
         output.innerHTML = "Wait for connection...";
         // const ws = new WebSocket("ws://localhost:3000");
         const ws = new ReconnectingWebSocket("wss://websocket-server-ray.herokuapp.com");
+
         ws.onopen =
             () => {
                 output.innerHTML = "Connected to the server";
@@ -36,7 +37,8 @@
                 };
 
                 ws.onmessage = (event) => {
-                    console.log(event.data);
+                    console.log(event);
+                    console.log(ws);
                     bing.currentTime = 0;
                     bing.play();
                     const msg = JSON.parse(event.data);
