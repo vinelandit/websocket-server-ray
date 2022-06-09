@@ -22,28 +22,37 @@
         // const ws = new WebSocket("ws://localhost:3000");
         const ws = new ReconnectingWebSocket("wss://websocket-server-ray.herokuapp.com");
 
+        var drawing = false;
+
         ws.onopen =
             () => {
                 output.innerHTML = "Connected to the server";
-                window.onmousedown = (event) => {
-                    if(init) {
-                        bing.play();
-                        init = false;
+                window.onmousemove = (event) => {
+                    if(drawing) {
+                        const x = event.clientX;
+                        const y = event.clientY;
+                        console.log(x + ", " + y)
+                        ws.send(JSON.stringify({x: x, y: y}));
                     }
-                    const x = event.clientX;
-                    const y = event.clientY;
-                    console.log(x + ", " + y)
-                    ws.send(JSON.stringify({x: x, y: y}));
+                    
                 };
 
-                ws.onmessage = (event) => {
+                window.onmousedown = (event) => {
+                    drawing = true;
+                }
+
+                window.onmouseup = (event) => {
+                    drawing = false;
+                }
+
+                /* ws.onmessage = (event) => {
                     console.log(event);
                     console.log(ws);
                     bing.currentTime = 0;
                     bing.play();
                     const msg = JSON.parse(event.data);
                     output.innerHTML = `Answer from server: x = ${msg.x}, y = ${msg.y}`;
-                }
+                } */
             };
     </script>
 </body>
