@@ -7,24 +7,30 @@ const app = express();
 app.use(express.static(path.join(__dirname, "./public")));
 app.get("/", (req, res) => { res.sendFile(path.join(__dirname, "index.html")) });
 
+
+var td = null; // will contain touch designer websocket client
+
 const httpServer = http.createServer(app);
 const wss = new ws.Server({ server: httpServer });
 wss.on("connection",
-    (ws) =>
+    (ws, req) =>
     {
         console.log("Client connected");
-        ws.onmessage =
-            (event) =>
-            {
-                const msg = JSON.parse(event.data);
-                console.log(msg.x + ", " + msg.y);
-                // Send an answer
-                const resp = {
-                    x: msg.x,
-                    y: msg.y
+        if(req.url.indexOf('TOUCHDESIGNER')>-1) {
+            console.log('Registering Touchdesigner client');
+            td = ws;
+        } else {
+            ws.onmessage =
+                (event) =>
+                {
+                    if(td!==null) {
+                        const msg = event.data;
+                        td.send(msg);
+                    }
+                    
                 }
-                ws.send(JSON.stringify(resp));
-            }
+        }
+        
     });
 
 const port = process.env.PORT || 3000;
