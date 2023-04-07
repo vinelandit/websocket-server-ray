@@ -8,6 +8,7 @@
 </head>
 
 <body>
+    <button id="press">PRESS ME</button>
     <audio id="bing">
         <source src="piano_C5.mp3" type="audio/mpeg">
 </audio>
@@ -43,6 +44,10 @@
 
                 window.onmouseup = (event) => {
                     drawing = false;
+                }
+
+                document.getElementById('press').onclick = (event) => {
+                     ws.send(JSON.stringify({ mork: 'bork'}));
                 }
 
                 ws.onmessage = (event) => {
