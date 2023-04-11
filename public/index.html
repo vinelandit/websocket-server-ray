@@ -5,61 +5,41 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Web Client</title>
+    <link rel="stylesheet" href="./js/jquery-ui-1.13.2.custom/jquery-ui.min.css">
+    <link rel="stylesheet" href="./css/styles.css">
 </head>
 
+
+
 <body>
-    <button id="press">PRESS ME</button>
-    <audio id="bing">
-        <source src="piano_C5.mp3" type="audio/mpeg">
-</audio>
-    <h3>Click on the window.</h3>
-    <div id="output" style="font-family: Arial; font-size: 14px;"></div>
-    <script src="js/reconnecting-websocket.min.js"></script>
-    <script>
-        const output = document.getElementById("output");
-        const bing = document.getElementById('bing');
-        var init = true;
-        output.innerHTML = "Wait for connection...";
-        // const ws = new WebSocket("ws://localhost:3000");
-        const ws = new ReconnectingWebSocket("wss://websocket-server-ray.herokuapp.com");
+    <div id="logo"><img src="./img/logo.png" alt="Polypong logo"></div>
+    <div id="main">
+        <div class="panel" id="gameOver">
+            <h2>GAME OVER!</h2>
+            <h3>Submit initials</h3>
+            <input type="text" id="i0" maxlength="1" size="1" />
+            <input type="text" id="i1" maxlength="1" size="1" />
+            <input type="text" id="i2" maxlength="1" size="1" />
+            <button id="submitInitials">Done</button>
+        </div>
 
-        var drawing = false;
+        <div class="panel" id="play">
+            
+            <div id="livesBox"><div>lives</div><span id="lives">05</span></div>
+            
+            <div id="slider-vertical"></div>
+        </div>
+        <div class="panel" id="message">Another player is occupying that slot. Scan another slot's QR code or wait for a player to finish and scan theirs.</div>
+        <div class="panel" id="thanks">Thanks for playing!</div>
+    </div>
 
-        ws.onopen =
-            () => {
-                output.innerHTML = "Connected to the server";
-                window.onmousemove = (event) => {
-                    if(drawing) {
-                        const x = event.clientX/window.innerWidth;
-                        const y = event.clientY/window.innerHeight;
-                        console.log(x + ", " + y)
-                        ws.send(JSON.stringify({x: x, y: y}));
-                    }
-                    
-                };
+    <div id="output" style="display: none;font-family: Arial; font-size: 14px;"></div>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery-ui-1.13.2.custom/jquery-ui.min.js"></script>
+    <script src="js/jquery.ui.touch-punch.min.js"></script>
+    <script src="js/index.js"></script>
+    <!-- <script src="js/reconnecting-websocket.min.js"></script> -->
 
-                window.onmousedown = (event) => {
-                    drawing = true;
-                }
-
-                window.onmouseup = (event) => {
-                    drawing = false;
-                }
-
-                document.getElementById('press').onclick = (event) => {
-                     ws.send(JSON.stringify({ mork: 'bork'}));
-                }
-
-                ws.onmessage = (event) => {
-                    console.log(event);
-                    console.log(ws);
-                    bing.currentTime = 0;
-                    bing.play();
-                    const msg = JSON.parse(event.data);
-                    output.innerHTML = `Answer from server: x = ${msg.x}, y = ${msg.y}`;
-                }
-            };
-    </script>
 </body>
 
 </html>
