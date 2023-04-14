@@ -1,6 +1,8 @@
 $(document).ready(function(){
 
     
+    var playing = false;
+
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
     const playerID = urlParams.get('pid');
@@ -13,6 +15,15 @@ $(document).ready(function(){
             location.href = '/thanks.html';
         }
     });
+
+    const beforeUnloadListener = (event) => {
+      if(playing) {
+        event.preventDefault();
+        return confirm('Are you sure you want to leave the page? You will forfeit the rest of your lives.');
+      }
+    };
+
+    addEventListener('beforeunload', beforeUnloadListener, { capture: true });
 
     const send = function(command, payload) {
         const obj = {
@@ -62,11 +73,13 @@ $(document).ready(function(){
                     if(data.payload.lives <= 0) {
                         // show game over 
                         showPanel('gameOver');
+                        playing = false;
                     } else {
                         $('#lives').html('0'+data.payload.lives);
                     }
                 } else if (data.command == 'grantGame') {
                     if(data.payload.playerID == playerID) {
+                        playing = true;
                         showPanel('play');
                         // do start animation
                     } else {
