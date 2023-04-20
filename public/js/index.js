@@ -112,7 +112,10 @@ $(document).ready(function(){
         console.log(ui.value);
 
         send('movePaddle', { speed: ui.value} );
-      },
+      }
+      /*
+      ,
+      
       stop: function(event, ui) {
         
         send('movePaddle', { speed: 0 });
@@ -122,6 +125,7 @@ $(document).ready(function(){
         });
 
       }
+      */
     });
 
     $('input').keyup(function(e){
