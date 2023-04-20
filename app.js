@@ -128,12 +128,14 @@ wss.on("connection",
                         if(data.to == 'master') {
                             const i = 'player'+data.from;
 
-                            if(deadClients[i] && data.command == 'submitInitials') {
+                            if(data.command == 'submitInitials') {
                                 // add lifetime to data, submit initials, close connection
                                 data.payload.lifetime = Math.round(((times[i].end - times[i].start) / 1000) - preroll);
                                 event.data = JSON.stringify(data);
-                                deadClients[i].close();
-                                delete deadClients[i];
+                                if(deadClients[i]) {
+                                    deadClients[i].close();
+                                    delete deadClients[i];
+                                }
                             }
                             if(data.command == 'clearClients') {
                                 console.log('clearing clients');
@@ -147,6 +149,7 @@ wss.on("connection",
                                 }
 
                             } else {
+                                console.log('sending', event.data);
                                 master.send(event.data);
                             }
                         } else {
