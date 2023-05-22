@@ -6,11 +6,14 @@ $(document).ready(function(){
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
     const playerID = urlParams.get('pid');
-    console.log('playerID', playerID)
+    console.log('playerID', playerID);
+
+    var ignoreClosed = false;
 
     $('#submitInitials').click(function(){
         const initials = ($('#i0').val() + $('#i1').val() + $('#i2').val()).trim();
         if(initials !== '') {
+            ignoreClosed = true;
             send('submitInitials', { 'initials': initials });
             location.href = '/thanks.html';
         }
@@ -88,7 +91,13 @@ $(document).ready(function(){
                 }
                 
             }
+
+            ws.onclose = (event) => {
+                if(!ignoreClosed) alert('websocket connection closed.');
+            }
         };
+
+
 
     $(window).resize(function(){
         $('#slider-vertical').css({
