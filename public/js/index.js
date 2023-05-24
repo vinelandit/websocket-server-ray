@@ -93,7 +93,7 @@ $(document).ready(function(){
             }
 
             ws.onclose = (event) => {
-                if(!ignoreClosed) alert('websocket connection closed.');
+                console.log('websocket connection closed.');
             }
         };
 
