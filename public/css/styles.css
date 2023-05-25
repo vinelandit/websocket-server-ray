@@ -37,7 +37,7 @@ a {
 
         html, body {
             font-family: 'Bit5x3';
-            background-color: #551111;
+            background-color: rgb(36, 0, 143);
             color: white;
             margin: 0;
             padding: 0;
@@ -167,8 +167,8 @@ a {
             bottom: 55%;
             width: 40%;
             left: 30%;
-            background: rgb(179,87,45);
-background: linear-gradient(180deg, rgba(179,87,45,1) 0%, rgba(179,67,45,0) 100%);
+            background: rgb(26, 217, 112);
+background: linear-gradient(180deg, rgba(26, 217, 112,1) 0%, rgba(26, 217, 112,0) 100%);
         }
         #throttleDown {
             position: absolute;
@@ -198,8 +198,8 @@ background: linear-gradient(0deg, rgba(45,179,165,1) 0%, rgba(45,179,165,0) 100%
         #slider-vertical {
             
             
-            background: rgb(45,179,165);
-background: linear-gradient(0deg, rgba(45,179,165,1) 0%, rgba(45,179,165,0) 50%, rgba(179,67,45,0) 50%, rgba(179,67,45,1) 100%);
+            background: rgb(26, 217, 112);
+background: linear-gradient(0deg, rgba(26, 217, 112,1) 0%, rgba(26, 217, 112,0) 50%, rgba(175, 26, 217,0) 50%, rgba(175, 26, 217,1) 100%);
             height: 300px;
             
             width: 60%;
