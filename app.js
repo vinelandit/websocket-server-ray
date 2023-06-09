@@ -13,6 +13,8 @@ var tdClient = null;
 
 var lastMessage;
 
+const playerStates = {};
+
 const httpServer = http.createServer(app);
 const wss = new ws.Server({ server: httpServer });
 wss.on("connection",
@@ -26,14 +28,23 @@ wss.on("connection",
             console.log('Registering phone client');
         }
 
+        setInterval(function() {
+
+            if(tdClient != null) {
+                tdClient.send(event.data);   
+            }
+        }, 33);
+
+
         ws.onmessage =
             (event) =>
             {
                 if(event.data != '2::' && event.data != '') { // ignore keepalive ping
-                    console.log(event.data);
-                    if(tdClient != null) {
-                        tdClient.send(event.data);   
-                    }
+                    // console.log(event.data);
+                    const data = JSON.parse(event.data);
+
+                    playerStates[data.playerID] = data.data;
+                    
                 }
                 
                 
