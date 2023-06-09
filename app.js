@@ -20,7 +20,7 @@ wss.on("connection",
     {
         console.log("Client connected");
         if(req.url.indexOf('TOUCHDESIGNER')>-1) {
-            console.log('Registering screen client');
+            console.log('Registering TD client');
             tdClient = ws;
         } else {
             console.log('Registering phone client');
@@ -29,7 +29,7 @@ wss.on("connection",
         ws.onmessage =
             (event) =>
             {
-                if(event.data != '2::') { // ignore keepalive ping
+                if(event.data != '2::' && event.data != '') { // ignore keepalive ping
                     
                     if(tdClient != null) {
                         tdClient.send(event.data);   
