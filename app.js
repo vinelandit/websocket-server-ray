@@ -9,7 +9,7 @@ app.get("/", (req, res) => { res.sendFile(path.join(__dirname, "index.html")) })
 
 console.log('hello');
 
-const tdClient = null;
+var tdClient = null;
 
 var lastMessage;
 
