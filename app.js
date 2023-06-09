@@ -13,10 +13,20 @@ var tdClient = null;
 
 var lastMessage;
 
-const playerStates = {};
+const playerData = {};
 
 const httpServer = http.createServer(app);
 const wss = new ws.Server({ server: httpServer });
+
+setInterval(function() {
+
+    if(tdClient != null) {
+        tdClient.send(JSON.stringify(playerData));   
+    }
+
+}, 33);
+
+
 wss.on("connection",
     (ws, req) =>
     {
@@ -28,12 +38,7 @@ wss.on("connection",
             console.log('Registering phone client');
         }
 
-        setInterval(function() {
-
-            if(tdClient != null) {
-                tdClient.send(event.data);   
-            }
-        }, 33);
+        
 
 
         ws.onmessage =
@@ -42,8 +47,10 @@ wss.on("connection",
                 if(event.data != '2::' && event.data != '') { // ignore keepalive ping
                     // console.log(event.data);
                     const data = JSON.parse(event.data);
+                    if(data.playerID) {
 
-                    playerStates[data.playerID] = data.data;
+                        playerData[data.playerID] = data.data;
+                    }
                     
                 }
                 
