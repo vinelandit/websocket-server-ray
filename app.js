@@ -20,7 +20,7 @@ const wss = new ws.Server({ server: httpServer });
 
 setInterval(function() {
 
-    if(tdClient != null) {
+    if(tdClient != null && playerData != {}) {
         tdClient.send(JSON.stringify(playerData));   
     }
 
@@ -47,7 +47,7 @@ wss.on("connection",
                 if(event.data != '2::' && event.data != '') { // ignore keepalive ping
                     console.log(event.data);
                     const data = JSON.parse(event.data);
-                    if(data.playerID && parseInt(data.playerID) < 3 && parseInt(data.playerID) >= 0) {
+                    if(data.playerID && data.playerID=='bob' || data.playerID=='alice' || data.playerID=='chuck') {
 
                         playerData[data.playerID] = data.data;
                     }
