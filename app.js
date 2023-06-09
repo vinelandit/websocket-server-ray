@@ -30,7 +30,7 @@ wss.on("connection",
             (event) =>
             {
                 if(event.data != '2::' && event.data != '') { // ignore keepalive ping
-                    
+                    console.log(event.data);
                     if(tdClient != null) {
                         tdClient.send(event.data);   
                     }
