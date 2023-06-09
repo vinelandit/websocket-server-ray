@@ -9,8 +9,9 @@ app.get("/", (req, res) => { res.sendFile(path.join(__dirname, "index.html")) })
 
 console.log('hello');
 
-const screens = [];
+const tdClient = null;
 
+var lastMessage;
 
 const httpServer = http.createServer(app);
 const wss = new ws.Server({ server: httpServer });
@@ -18,9 +19,9 @@ wss.on("connection",
     (ws, req) =>
     {
         console.log("Client connected");
-        if(req.url.indexOf('SCREEN')>-1) {
+        if(req.url.indexOf('TOUCHDESIGNER')>-1) {
             console.log('Registering screen client');
-            screens.push(ws);
+            tdClient = ws;
         } else {
             console.log('Registering phone client');
         }
@@ -30,13 +31,9 @@ wss.on("connection",
             {
                 if(event.data != '2::') { // ignore keepalive ping
                     
-                    for(var i in screens) {
-                        console.log('relaying data to screen '+i, event.data);
-                        screens[i].send(event.data);
+                    if(tdClient != null) {
+                        tdClient.send(event.data);   
                     }
-                    
-
-                    
                 }
                 
                 
