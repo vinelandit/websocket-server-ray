@@ -76,7 +76,7 @@ wss.on("connection",
                     console.log(data);
                     if(data.pid) {
 
-                        playerData['' + data.pid] = data.data;
+                        playerData['' + data.pid] = data;
                     }
                     
                 }
