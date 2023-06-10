@@ -73,7 +73,7 @@ wss.on("connection",
                 if(event.data != '2::' && event.data != '') { // ignore keepalive ping
                     console.log(event.data);
                     const data = JSON.parse(event.data);
-                    if(data.playerID && data.playerID=='bob' || data.playerID=='alice' || data.playerID=='chuck') {
+                    if(data.playerID && parseInt(data.playerID) > 0) {
 
                         playerData[data.playerID] = data.data;
                     }
