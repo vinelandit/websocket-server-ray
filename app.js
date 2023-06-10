@@ -34,14 +34,40 @@ wss.on("connection",
         if(req.url.indexOf('TOUCHDESIGNER')>-1) {
             console.log('Registering TD client');
             tdClient = ws;
+
+            // handler for messages from TD
+            ws.onmessage =
+            (event) =>
+            {
+                if(event.data != '2::' && event.data != '') { // ignore keepalive ping
+                    
+                    const data = JSON.parse(event.data);
+                    if(data.command) {
+                        
+                        if(data.command == 'reset') {
+                        
+                            console.log('Received reset command from TD');
+                            for(var a in playerData) {
+                                delete playerData[a];
+                            }
+                            wss.clients.forEach(function each(client) {
+                              if (client !== ws && client.readyState === WebSocket.OPEN) {
+                                client.close();
+                              }
+                            });
+                        }
+                        
+                    }
+                    
+                }
+                
+                
+            }
         } else {
             console.log('Registering phone client');
-        }
 
-        
-
-
-        ws.onmessage =
+            // handler for messages from phones
+            ws.onmessage =
             (event) =>
             {
                 if(event.data != '2::' && event.data != '') { // ignore keepalive ping
@@ -56,6 +82,12 @@ wss.on("connection",
                 
                 
             }
+        }
+
+        
+
+
+        
         
     });
 
