@@ -74,9 +74,9 @@ wss.on("connection",
                     
                     const data = JSON.parse(event.data);
                     console.log(data);
-                    if(data.pid && parseInt(data.pid) >= 0) {
+                    if(data.pid) {
 
-                        playerData[data.pid] = data.data;
+                        playerData['' + data.pid] = data.data;
                     }
                     
                 }
