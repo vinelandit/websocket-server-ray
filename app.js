@@ -24,7 +24,7 @@ setInterval(function() {
         tdClient.send(JSON.stringify(playerData));   
     }
 
-}, 33);
+}, 16);
 
 
 wss.on("connection",
