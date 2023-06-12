@@ -43,7 +43,7 @@ const validate = function(data) {
     if(senderType == 'fromClient' && data.to !== 'master') valid = false;
     // if(senderType == 'fromMaster' && data.to == 'master') valid = false;
 
-    console.log('valid', valid);
+    // console.log('valid', valid);
     return valid;
    
 }
