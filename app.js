@@ -35,7 +35,7 @@ const commandList = {
 const validate = function(data) {
     var valid = true;
     data = JSON.parse(data);
-    console.log('validating', data);
+    // console.log('validating', data);
     if(!data.to) valid = false;
     const senderType = data.to == 'master' ? 'fromClient' : 'fromMaster';
     if(!commandList[senderType][data.command]) valid = false;
@@ -149,7 +149,7 @@ wss.on("connection",
                                 }
 
                             } else {
-                                console.log('sending', event.data);
+                                // console.log('sending', event.data);
                                 master.send(event.data);
                             }
                         } else {
