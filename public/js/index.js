@@ -44,7 +44,7 @@ $(document).ready(function(){
         $('.panel#'+panelID).fadeIn(300);
     }
 
-    const ws = new WebSocket("wss://websocket-server-ray.herokuapp.com/?pid="+playerID);
+    const ws = new WebSocket("wss://polypong-fa1dd232c049.herokuapp.com/?pid="+playerID);
     // const ws = new WebSocket("ws://192.168.137.1:3000/?pid="+playerID);
 
     var drawing = false;
